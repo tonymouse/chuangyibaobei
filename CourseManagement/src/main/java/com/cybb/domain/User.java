@@ -1,4 +1,4 @@
-package com.cm.domain;
+package com.cybb.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,8 +1,8 @@
-package com.cm.repository;
+package com.cybb.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.cm.domain.User;
+import com.cybb.domain.User;
 
 public interface UserRepo extends CrudRepository<User, Long>{
 	

@@ -1,4 +1,4 @@
-package com.cm.controller;
+package com.cybb.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cm.domain.User;
-import com.cm.service.UserService;
+import com.cybb.domain.User;
+import com.cybb.service.UserService;
 
 @RestController  
  

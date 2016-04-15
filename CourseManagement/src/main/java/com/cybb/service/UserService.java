@@ -1,10 +1,10 @@
-package com.cm.service;
+package com.cybb.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cm.domain.User;
-import com.cm.repository.UserRepo;
+import com.cybb.domain.User;
+import com.cybb.repository.UserRepo;
 
 @Service
 public class UserService {

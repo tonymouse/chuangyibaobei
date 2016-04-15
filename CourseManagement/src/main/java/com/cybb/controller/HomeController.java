@@ -1,4 +1,4 @@
-package com.cm.controller;
+package com.cybb.controller;
 
 import javax.servlet.http.HttpSession;
 
