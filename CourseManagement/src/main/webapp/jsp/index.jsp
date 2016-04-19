@@ -12,23 +12,37 @@
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<a class="brand" href="#">课程管理系统</a>
-				<form class="navbar-form pull-right">
-					<div class="nav-collapse collapse">
-						<ul class="nav pull-right">
-							<li class="dropdown"><a class="dropdown-toggle"
-								data-toggle="dropdown" href="#" data-target="#"> ${user}<b class="caret"></b>
-							</a>
-								<ul class="dropdown-menu">
-									<li><a href="/logout">注销</a></li>
-								</ul></li>
-						</ul>
-					</div>
-				</form>
-			</div>
+	<div class="navbar-inner">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="brand">课程管理系统</a>
 		</div>
+		<div id="navbar" class="nav-collapse collapse">
+			<ul class="nav navbar-nav">
+			<c:forEach items="${userAccess}" var="access">
+			<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="${access.tabActionUrl}" data-target="${access.tabActionUrl}">${access.tabName}<b
+						class="caret"></b>
+				</a>
+					<ul class="dropdown-menu">
+					<c:forEach items="${access.subTabMapList}" var="subTabMap">
+					<li><a href="${subTabMap.subTabUrl}">${subTabMap.subTabName}</a></li>
+					</c:forEach>
+					</ul>
+			</c:forEach>
+			</ul>
+			<ul class="nav pull-right">
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#" data-target="#"> ${user.name}<b
+						class="caret"></b>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/logout">注销</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</div>
+	</div>
 	</div>
 
 </body>
