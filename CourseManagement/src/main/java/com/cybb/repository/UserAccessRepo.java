@@ -10,7 +10,7 @@ import com.cybb.domain.UserAccess;
 
 
 
-public interface UserAccessRepo extends CrudRepository<UserAccess, String>{
+public interface UserAccessRepo extends CrudRepository<UserAccess, Long>{
 	
 	@Query("select ua from UserAccess ua where priviledge=:p order by tabId,subTabId")
 	public List<UserAccess> findByPriviledge(@Param("p") String priviledge);
