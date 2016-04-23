@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cybb.domain.City;
+import com.cybb.domain.Site;
 import com.cybb.service.SystemManagementService;
 
 
@@ -52,5 +55,14 @@ public class SystemManagementController {
 			return cityManagement();
 		}
 		
+        }
+	
+	@RequestMapping(value="/system/siteManagement", method = RequestMethod.POST) 
+	@ResponseBody
+	public ModelAndView siteManagement(HttpSession session) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		List<Site> siteList = systemService.getAllSites();
+		model.put("siteList", siteList);
+        return new ModelAndView("siteManagement",model);  
         } 
 }
