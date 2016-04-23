@@ -2,12 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
-$( function(){
-	$('#errorBox').hide();
-	$('#successBox').hide();
-} );
 
-$('#exampleModal').on('show.bs.modal', function (event) {
+
+$('#cityModal').on('show.bs.modal', function (event) {
 	$('#errorBox').hide();
 	$('#successBox').hide();
 	  var button = $(event.relatedTarget); // Button that triggered the modal
@@ -16,8 +13,11 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 	  var modal = $(this);
 	  if(cityName == null||cityName==''){
 	  	modal.find('.modal-title').text('添加城市');
+	  	console.log();
+	  	modal.find('.modal-footer button .btn-primary').html('添加');
 	  }else{
-		modal.find('.modal-title').text('修改城市');  
+		modal.find('.modal-title').text('修改城市'); 
+		modal.find('.modal-footer button .btn-primary').html('修改');
 	  }
 	  modal.find('#cityName').val(cityName);
 	  modal.find('#hiddenCityName').val(cityName);
@@ -25,17 +25,23 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 	});
 
 function editCity() {
-	var editCityName = $('#exampleModal').find('#cityName').val();
-	var previousCityName = $('#exampleModal').find('#hiddenCityName').val();
-	var editCityId = $('#exampleModal').find('#cityId').val();
+	var editCityName = $('#cityModal').find('#cityName').val();
+	var previousCityName = $('#cityModal').find('#hiddenCityName').val();
+	var editCityId = $('#cityModal').find('#cityId').val();
 	if(typeof(editCityName) == 'undefined' || editCityName== null|| editCityName==''){
-		$('#exampleModal').modal('hide');
+		$('#cityModal').modal('hide');
+		$('#successBox').hide();
 		$('#errorBox').html('请输入需要添加或修改的城市名称');
 		$('#errorBox').show();
+		$('#alertModal').modal('show');
+		setTimeout(function(){$("#alertModal").modal("hide");},2000);
 	}else if(editCityName == previousCityName){
-		$('#exampleModal').modal('hide');
+		$('#cityModal').modal('hide');
+		$('#successBox').hide();
 		$('#errorBox').html('修改的城市名称相同');
 		$('#errorBox').show();
+		$('#alertModal').modal('show');
+		setTimeout(function(){$("#alertModal").modal("hide");},2000);
 		}else{
 			console.log(editCityName);
 		$.ajax({
@@ -45,22 +51,31 @@ function editCity() {
 	    	datatype: 'json',
 	        success: function(data){
 	        	if(data=='failed'){
-		    	$('#exampleModal').modal('hide');
+		    	$('#cityModal').modal('hide');
+		    	$('#successBox').hide();
 	        	$('#errorBox').html('添加或修改的城市名称已存在！');
 	        	$('#errorBox').show();
+	        	$('#alertModal').modal('show');
+	        	setTimeout(function(){$("#alertModal").modal("hide");},2000);
 	        	}else{
-	        		$('#exampleModal').modal('hide');
+	        		$('#cityModal').modal('hide');
 	        		$('#centerDiv').html('');
                 	$('#centerDiv').html(data);
+                	$('#errorBox').hide();
     	        	$('#successBox').show();
+    	        	$('#alertModal').modal('show');
+    	        	setTimeout(function(){$("#alertModal").modal("hide");},2000);
     	        	
 	        	}	        	
 	        },
 	        error:function (XMLHttpRequest, textStatus, errorThrown) 
 	        { 
-	        	$('#exampleModal').modal('hide');  
+	        	$('#cityModal').modal('hide');  
+	        	$('#successBox').hide();
 	        	$('#errorBox').html(errorThrown);
 	    		$('#errorBox').show();
+	    		$('#alertModal').modal('show');
+	    		setTimeout(function(){$("#alertModal").modal("hide");},2000);
 	        } 
 		
     });
@@ -68,37 +83,13 @@ function editCity() {
 	
 }
 </script>
-<div class="nav navbar-nav navbar-left">
-<div id="errorBox" class="alert alert-danger">
-                            用户名/密码错误，请重试
-</div>
-<div id="successBox" class="alert alert-success">
-                           城市添加/修改成功！
-</div>
-</div>
 <div class="nav navbar-nav navbar-right"> 
-<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-cityName="" data-cityId="">添加城市</button>
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#cityModal" data-cityName="" data-cityId="">添加城市</button>
 </div>
-<br>
-<br>
-<br>
+
 <br>
 
-<div>城市名称</div>
-<br>
-<!-- <div class="row"> -->
-<%-- <c:forEach items="${cityList}" var="city"> --%>
-<!-- <div class="col-lg-4"> -->
-<!-- <div class="input-group"> -->
-<%--       <input id="city_${city.cityId}" type="text" class="form-control" value="${city.cityName}"> --%>
-<!--       <span class="input-group-btn"> -->
-<%--         <button class="btn btn-default" type="button" onclick="editCity(this,'${city.cityId}','${city.cityName}')">修改</button> --%>
-<!--       </span> -->
-<!-- </div> -->
-<!-- </div> -->
-<%-- </c:forEach> --%>
-<!-- </div> -->
-<table class="table table-striped">
+<table class="table table-striped" style="margin-top:50px">
   <thead>
         <tr>
           <th>城市名称</th>
@@ -109,13 +100,13 @@ function editCity() {
   <c:forEach items="${cityList}" var="city">
   <tr>
   <td>${city.cityName}</td>
-  <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-cityName="${city.cityName}" data-cityId="${city.cityId}">修改</button></td>
+  <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cityModal" data-cityName="${city.cityName}" data-cityId="${city.cityId}">修改</button></td>
   </tr>
   </c:forEach>
   </tbody>
 </table>
 
-<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+<div class="modal" id="cityModal" tabindex="-1" role="dialog" aria-labelledby="cityModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -137,3 +128,16 @@ function editCity() {
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="cityModalLabel">
+  <div class="modal-dialog" role="document">
+<!--     <div class="modal-content"> -->
+      <div class="modal-body">
+        <div id="errorBox" class="alert alert-danger">                           
+		</div>
+		<div id="successBox" class="alert alert-success">
+                           城市添加/修改成功！
+</div>
+      </div>
+  </div>
+</div>
